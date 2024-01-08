@@ -13,7 +13,7 @@ for lld: array(2n-1 size)(since last element in array will be 3+3=6=8-1 size) on
 for lud:  array(2n-1 size) once q assigned,update (n-1)+(col-row)=index in lud array,so next time we have to check, we will just check if (n-1)+(col-row)= index is marked or not in lud array see img: 51(2) */
 class Solution {
 public:
-   /* void fn(int col,int n,vector<vector<string>>&ans,vector<string>&board,vector<int>&leftrow,vector<int>&uppdiag,vector<int>&lowdiag){
+    void fn(int col,int n,vector<vector<string>>&ans,vector<string>&board,vector<int>&leftrow,vector<int>&uppdiag,vector<int>&lowdiag){
         if(col == n){
             ans.push_back(board);
             return;
@@ -49,41 +49,5 @@ public:
         vector<int>lowdiag(2*n-1,0);
         fn(0,n,ans,board,leftrow,uppdiag,lowdiag);  
         return ans;      
-    }*/
-     void fn(int col, vector<vector<string>>&ans,vector<string>&board,int n,vector<int>&left,vector<int>&left_upper,vector<int>&left_lower){
-        if(col == n){
-            ans.push_back(board);
-            return;
-        }
-        for(int row =0;row<n;row++){
-            if(left[row]==0 && left_upper[(n-1)+(col-row)]==0 && left_lower[col+row]==0){
-                board[row][col]='Q';
-                left[row]=1;
-                left_upper[(n-1)+(col-row)]= 1;
-                left_lower[col+row]=1;
-               
-                fn(col+1,ans,board,n,left,left_upper,left_lower);
-
-                board[row][col]='.';
-                left[row]=0;
-                left_upper[(n-1)+(col-row)]= 0;
-                left_lower[col+row]= 0;
-
-            }
-        }
-    }
-    vector<vector<string>> solveNQueens(int n) {
-        vector<vector<string>>ans;
-        vector<string>board(n);
-        string s(n,'.');
-        for(int i =0;i<n;i++){
-            board[i]=s;
-        }
-        vector<int>left(n,0);
-        vector<int>left_upper(2*n-1,0);
-        vector<int>left_lower(2*n-1,0);
-        fn(0,ans,board,n,left,left_upper,left_lower);
-        return ans;
-        
     }
 };
