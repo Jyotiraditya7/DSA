@@ -9,7 +9,7 @@ see pic 4
 3) the mid1 will be number of elements from arr1 in left half (mid1=x and index 0 to mid1-1 elements will be taken). so mid2 will be len_lefthalf - x and index = 0 to mid2-1 elements will be taken from arr2 in lefthalf
 4) rest of el from arr1 and arr2 in right half
 5) now l1->last element of arr1 in left half, l2->last element of arr1 in left half, r1-> first element of arr1 in right half, r1-> first element of arr2 in right half.
-also assign l1,l2 = int_min and r1,r2 = int_max
+also assign l1,l2 = int_min and r1,r2 = int_max and then assign the values to l1,l2,r1,r2(using if condition to check boundary conditions)
 
 6) terminating condition is l1<=r2 and l2<=r1
 if l1> r2 then more elements have been taken from arr1, so decrease x-> high = mid-1;
