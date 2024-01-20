@@ -1,7 +1,7 @@
 /* 
 1)min heap bana ke topmost(min) element delete kiya
 2)heap is of k size, so if 1st largest so only 1 element(largest) will be in heap,each time smaller being rejected
-3) at end just pop heap
+3) at end just return top
 */
 
 
