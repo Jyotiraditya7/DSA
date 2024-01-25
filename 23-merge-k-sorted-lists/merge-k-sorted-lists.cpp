@@ -34,3 +34,10 @@ public:
         return dummynode->next;
     }
 };
+/*
+1) push 1st element of each linked list into a priority queue(min heap) along with its value( i.e pair<value,the node>) as min heap will sort accroding to value
+2) create dummynode and pointer temp
+3)remove the topmost element of min heap and insert into the next of dummynode
+4) before inserting to dummy node linkedlist, check if the el's next is not null and insert its next+next's value into the heap
+5) repeat step 3 to 4 till min heap is not empty.also while removing from heap and inserting from individual linked list,at the end all linked list pointer will reach the end(=NULL).
+*/
