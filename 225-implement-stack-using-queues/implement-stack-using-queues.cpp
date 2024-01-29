@@ -15,7 +15,7 @@ public:
     
     int pop() {
        // ***wrong q.pop() doesn't return anything int x = q.pop();
-       int x = top();
+       int x = q.front();
        q.pop();
        return x;
     }
