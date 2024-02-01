@@ -1,38 +1,22 @@
 class Solution {
 public:
     vector<int> nextGreaterElement(vector<int>& nums1, vector<int>& nums2) {
-          
-        vector<int> res(nums1.size(), -1); //to be returned, initialize it with -1.
-        stack<int> st;
-        unordered_map<int, int> umap;
-        
-        for(int i=0; i<nums2.size(); i++)
-        {
-            int element = nums2[i];
-            
-            while(!st.empty() && element > st.top())
-            {
-                //NGE of st.top() is element
-				
-                umap[st.top()] = element;
+        stack<int>st;
+        unordered_map<int,int>mp;
+        vector<int>ans(nums1.size(),-1);
+        for(int i =0;i<nums2.size();i++){
+            int cur_el = nums2[i];
+            while(!st.empty() && cur_el>st.top()){
+                mp[st.top()]=cur_el;
                 st.pop();
             }
-            
-            st.push(element);
+            st.push(cur_el);
         }
-        
-        for(int i=0; i<nums1.size(); i++)
-        {
-            int ele = nums1[i];
-            
-            if(umap.find(ele) != umap.end())
-            {
-                int nge = umap[ele];
-                res[i] = nge; //push NGE of desired element
+        for(int i =0;i<nums1.size();i++){
+            if(mp.find(nums1[i])!=mp.end()){
+                ans[i] = mp[nums1[i]];
             }
-                
         }
-        
-        return res;
+        return ans;
     }
 };
