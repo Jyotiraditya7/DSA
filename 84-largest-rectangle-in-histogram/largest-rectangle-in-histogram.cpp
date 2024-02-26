@@ -1,68 +1,77 @@
-// Largest Rectangle in Histogram
-// Stack solution, O(NlogN) solution
-
-class SegTreeNode {
+/*class Solution {
 public:
-  int start;
-  int end;
-  int min;
-  SegTreeNode *left;
-  SegTreeNode *right;
-  SegTreeNode(int start, int end) {
-    this->start = start;
-    this->end = end;
-    left = right = NULL;
-  }
-};
+    int largestRectangleArea(vector<int>& heights) {
+        int n = heights.size();
+        int leftarr[n];
+        int rightarr[n];
+        stack<int>st;
+        for(int i =0;i<n;i++){
+            while(!st.empty() && heights[i]<heights[st.top()]){
+                st.pop();
+            }
+            if(st.empty()){
+                leftarr[i]=0;
+            }
+            else{
+                leftarr[i]=st.top()+1;
+            }
+                st.push(i);
+        }
+        for(int i =n-1;i>0;i--){
+            while(!st.empty() && heights[i]<heights[st.top()]){
+                st.pop();
+            }
+            if(st.empty()){
+                rightarr[i]=n-1;
+            }
+            else{
+                rightarr[i]=st.top()-1;
+            }
+            st.push(i);
+        }
+        int ans = 0;
+        for(int i =0;i<n;i++){
+            ans = max(ans, heights[i]*(rightarr[i] - leftarr[i] +1));
+        }
+        return ans;
 
+    }
+};*/
 class Solution {
-public:
-  int largestRectangleArea(vector<int>& heights) {
-    if (heights.size() == 0) return 0;
-    // first build a segment tree
-    SegTreeNode *root = buildSegmentTree(heights, 0, heights.size() - 1);
-    // next calculate the maximum area recursively
-    return calculateMax(heights, root, 0, heights.size() - 1);
-  }
-  
-  int calculateMax(vector<int>& heights, SegTreeNode* root, int start, int end) {
-    if (start > end) {
-      return -1;
+  public:
+    int largestRectangleArea(vector < int > & heights) {
+      int n = heights.size();
+      stack < int > st;
+      int leftsmall[n], rightsmall[n];
+      for (int i = 0; i < n; i++) {
+        while (!st.empty() && heights[st.top()] >= heights[i]) {
+          st.pop();
+        }
+        if (st.empty())
+          leftsmall[i] = 0;
+        else
+          leftsmall[i] = st.top() + 1;
+        st.push(i);
+      }
+      // clear the stack to be re-used
+      while (!st.empty())
+        st.pop();
+
+      for (int i = n - 1; i >= 0; i--) {
+        while (!st.empty() && heights[st.top()] >= heights[i])
+          st.pop();
+
+        if (st.empty())
+          rightsmall[i] = n - 1;
+        else
+          rightsmall[i] = st.top() - 1;
+
+        st.push(i);
+      }
+      int maxA = 0;
+      for (int i = 0; i < n; i++) {
+        maxA = max(maxA, heights[i] * (rightsmall[i] - leftsmall[i] + 1));
+      }
+      return maxA;
     }
-    if (start == end) {
-      return heights[start];
-    }
-    int minIndex = query(root, heights, start, end);
-    int leftMax = calculateMax(heights, root, start, minIndex - 1);
-    int rightMax = calculateMax(heights, root, minIndex + 1, end);
-    int minMax = heights[minIndex] * (end - start + 1);
-    return max( max(leftMax, rightMax), minMax );
-  }
-  
-  SegTreeNode *buildSegmentTree(vector<int>& heights, int start, int end) {
-    if (start > end) return NULL;
-    SegTreeNode *root = new SegTreeNode(start, end);
-    if (start == end) {
-        root->min = start;
-      return root;
-    } else {
-      int middle = (start + end) / 2;
-      root->left = buildSegmentTree(heights, start, middle);
-      root->right = buildSegmentTree(heights, middle + 1, end);
-      root->min = heights[root->left->min] < heights[root->right->min] ? root->left->min : root->right->min;
-      return root;
-    }
-  }
-  
-  int query(SegTreeNode *root, vector<int>& heights, int start, int end) {
-    if (root == NULL || end < root->start || start > root->end) return -1;
-    if (start <= root->start && end >= root->end) {
-      return root->min;
-    }
-    int leftMin = query(root->left, heights, start, end);
-    int rightMin = query(root->right, heights, start, end);
-    if (leftMin == -1) return rightMin;
-    if (rightMin == -1) return leftMin;
-    return heights[leftMin] < heights[rightMin] ? leftMin : rightMin;
-  }
 };
