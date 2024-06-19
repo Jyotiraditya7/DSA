@@ -12,7 +12,7 @@ public:
         }
         s+=a;
         count++;
-        if(s.find(b)!=string::npos){
+        if(s.find(b)!=string::npos){ // S should be intially >= b for comparing . if not then make it. now if its >= then only after 1 more addition of a to S we will stop as it cant occur after that.
             return count;
         }
         return -1;
