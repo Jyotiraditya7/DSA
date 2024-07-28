@@ -47,7 +47,7 @@ public:
             return NULL;
         }
         Node* copy = new Node(node->val);
-        vector<Node*>visited(101,NULL);
+        vector<Node*>visited(101,NULL); //hashmap will also work but in this program the header files aren't included so it wasn't working out, you can inlcude it using #include
         dfs(copy,node,visited);
         return copy;
         
