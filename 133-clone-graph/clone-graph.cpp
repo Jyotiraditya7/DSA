@@ -29,7 +29,7 @@ for every neighbour in og node starting
 4) recursion/dfs and pass this node, along with this node ka og node, and visited array into dfs function
 */
 void dfs(Node* newnode,Node* curr_node,vector<Node*>&visited){
-    visited[curr_node->val]=newnode;
+    visited[newnode->val]=newnode;
     for(auto el: curr_node->neighbors){
         if(visited[el->val]==NULL){
             Node* temp = new Node(el->val);
